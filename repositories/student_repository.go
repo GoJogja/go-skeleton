@@ -9,7 +9,7 @@ import (
 
 var db = conf.GetConnection()
 
-func GetStudents(key int) *models.Student {
+func GetStudent(key int) (*models.Student, error) {
 	row, err := db.Query("select id, name from students where id = " + strconv.Itoa(key))
 	if err != nil {
 		log.Fatal(err)
@@ -21,7 +21,23 @@ func GetStudents(key int) *models.Student {
 	)
 	for row.Next() {
 		row.Scan(&id, &name)
-		return &models.Student{id, name}
 	}
-	return &models.Student{0, ""}
+	return &models.Student{id, name}, nil
+}
+
+func GetStudents() ([]models.Student, error) {
+	var students []models.Student
+
+	row, err := db.Query("select id, name from students")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	st := models.Student{}
+
+	for row.Next() {
+		row.Scan(&st.Id, &st.Name)
+		students = append(students, st)
+	}
+	return students, nil
 }
