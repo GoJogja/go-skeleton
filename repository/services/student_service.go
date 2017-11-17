@@ -72,3 +72,15 @@ func (conn *studentRepository) Save(student model.Student) (sql.Result, error) {
 	}
 	return res, nil
 }
+
+func (conn *studentRepository) Delete(key int) (sql.Result, error) {
+	stmt, err := conn.db.Prepare("delete from students where id = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err := stmt.Exec(key)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return res, nil
+}

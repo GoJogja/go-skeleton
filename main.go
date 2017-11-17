@@ -31,4 +31,7 @@ func main() {
 
 	fmt.Println("edit")
 	studentService.Edit(4, model.Student{1, "Fawwaz"})
+
+	fmt.Println("delete")
+	studentService.Delete(1)
 }

@@ -10,4 +10,5 @@ type StudentRepository interface {
 	GetList() ([]model.Student, error)
 	Edit(key int, student model.Student) (sql.Result, error)
 	Save(student model.Student) (sql.Result, error)
+	Delete(key int) (sql.Result, error)
 }
