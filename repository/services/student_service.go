@@ -5,14 +5,21 @@ import (
 	"github.com/prometheus/common/log"
 	"strconv"
 	"database/sql"
-	"ajar-go/repository/contracts"
 )
+
+type StudentRepository interface {
+	Get(key int) (*model.Student, error)
+	GetList() ([]model.Student, error)
+	Edit(key int, student model.Student) (sql.Result, error)
+	Save(student model.Student) (sql.Result, error)
+	Delete(key int) (sql.Result, error)
+}
 
 type studentRepository struct {
 	db *sql.DB
 }
 
-func NewStudentService(db *sql.DB) contract.StudentRepository {
+func NewStudentService(db *sql.DB) StudentRepository {
 	return &studentRepository{db}
 }
 
